@@ -1,0 +1,513 @@
+Abstraction is used to hide the internal functionality of the function from the users. The users only interact with the basic implementation of the function, but inner working is hidden. User is familiar with that "what function does" but they don't know "how it does."
+
+
+
+In simple words, we all use the smartphone and very much familiar with its functions such as camera, voice-recorder, call-dialing, etc., but we don't know how these operations are happening in the background. Let's take another example - When we use the TV remote to increase the volume. We don't know how pressing a key increases the volume of the TV. We only know to press the "+" button to increase the volume.
+
+That is exactly the abstraction that works in the object-oriented concept.
+
+
+In Python, abstraction can be achieved by using abstract classes and interfaces.
+
+
+example1:
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan  6 13:22:39 2022
+
+@author: pc
+"""
+
+
+'''
+#ex1 in this example we can achive abstraction,polymorphism and inheritance
+
+from abc import ABC,abstractmethod
+
+class VoiceAssistant(ABC):
+    
+    @abstractmethod
+    def activate_assistant(self):
+        pass
+    
+    @abstractmethod
+    def perform_task(self):
+        pass
+    @abstractmethod
+    def use_builtin_apps(self):
+        pass
+    
+    
+class siri(VoiceAssistant):
+    def activate_assistant(self):
+        print('hey siri,activate siri')
+        
+    def perform_task(self):
+       print('siri is performing the task using apple servers')
+       
+    def use_builtin_apps(self):
+        print('siri uses the builtin_apps of ios')
+        
+       
+        
+    
+class alexa(VoiceAssistant):
+    def activate_assistant(self):
+        print('alexa ,activate alexa')
+        
+    def perform_task(self):
+       print('alexa is performing the task using amazon servers')
+       
+    def use_builtin_apps(self):
+        print('alexa used the builtin apps of fire os')
+        
+        
+    
+class Google_assistant(VoiceAssistant):
+    def activate_assistant(self):
+        print('ok google,activate google')
+        
+    def perform_task(self):
+       print('Ga is performing the task using google servers')
+       
+    def use_builtin_apps(self):
+        print('Google uses the builtin apps of android os')
+
+#common interface
+def use_assistant(ref):
+    ref.activate_assistant()
+    ref.perform_task()
+    ref.use_builtin_apps()
+
+
+
+#creating the objects
+s=siri()
+a=alexa()
+ga=Google_assistant()
+
+
+                
+#passing the objects
+
+use_assistant(s) 
+use_assistant(a)
+use_assistant(ga)              
+
+
+hey siri,activate siri
+siri is performing the task using apple servers
+siri uses the builtin_apps of ios
+alexa ,activate alexa
+alexa is performing the task using amazon servers
+alexa used the builtin apps of fire os
+ok google,activate google
+Ga is performing the task using google servers
+Google uses the builtin apps of android os   
+
+
+'''
+
+
+
+'''
+#ex-2
+
+#Rule-1:An abstract class can contain combination of both abstract as well as concrete methods
+#Rule-2:You can't be creating an object of a class which contains an abstract method
+#Rule-3:A child class,if inherited from a parent class that it abstract,it can only create an object of itself if in 
+#case it overides all the abstract method inherited from the parent class
+
+
+from abc import ABC,abstractmethod
+
+class VoiceAssistant(ABC):
+    
+    @abstractmethod
+    def activate_assistant(self):
+        pass
+    @abstractmethod
+    def perform_task(self):
+        pass
+    @abstractmethod
+    def use_builtin_apps(self):
+        pass
+
+    def fun (self):
+        print('inside fun')
+        
+        
+#c=VoiceAssistant()
+#c.activate_assistant()   #
+#TypeError: Can't instantiate abstract class VoiceAssistant with abstract methods activate_assistant, perform_task, use_builtin_apps     
+        
+
+
+from abc import ABC,abstractmethod
+
+class VoiceAssistant(ABC):
+    
+    @abstractmethod
+    def activate_assistant(self):
+        pass
+    @abstractmethod
+    def perform_task(self):
+        pass
+    @abstractmethod
+    def use_builtin_apps(self):
+        pass
+
+    def fun (self):
+        print('inside fun')
+        
+        
+class siri(VoiceAssistant):
+    def activate_assistant(self):
+        print('hey siri,activate siri')
+        
+    def perform_task(self):
+       print('siri is performing the task using apple servers')
+       
+    def use_builtin_apps(self):
+        print('siri uses the builtin_apps of ios')
+           
+s=siri()
+s.activate_assistant()
+s.perform_task()
+s.use_builtin_apps()
+s.fun()        
+
+hey siri,activate siri
+siri is performing the task using apple servers
+siri uses the builtin_apps of ios
+inside fun
+
+
+
+
+'''
+
+'''
+from math import pi
+from abc import ABC,abstractmethod
+class shape(ABC):
+    def __init__(self):
+        self.area=0
+      
+    @abstractmethod    
+    def take_input(self):
+        pass
+    
+    @abstractmethod
+    def find_area(self):
+        pass
+    @abstractmethod
+    def disp_area(self):
+        pass
+    
+class circle(shape):
+    def __init__(self):
+        self.r=0
+        super().__init__()
+        
+    def take_input(self):
+        self.r=int(input('enter the raduis:\n'))
+        
+    def find_area(self):
+        self.area=pi*self.r**2
+        
+    def disp_area(self):
+        print(f'circle area ={self.area}')
+        
+class Triangle(shape):
+    def __init__(self):
+        self.b=0
+        self.h=0
+        super().__init__()
+        
+    def take_input(self):
+        self.b=int(input('enter the breadth of triangle:\n'))
+        self.h=int(input('enter the height if triangle '))
+        
+    def find_area(self):
+        self.area=(self.b*self.h)/2
+        
+    def disp_area(self):
+        print(f'Triangle area ={self.area}')        
+    
+    
+class rectangle(shape):
+    def __init__(self):
+        self.l=0
+        self.b=0
+        super().__init__()
+        
+    def take_input(self):
+        self.l=int(input('enter the length of rectangle:\n'))
+        self.b=int(input('enter the breadth of rectangle:\n'))
+    def find_area(self):
+        self.area=self.l*self.b
+        
+        
+        
+    def disp_area(self):
+        print(f'Recatangle  area ={self.area}')    
+    
+        pass
+    
+    
+#common interface
+def geomtric_shape(ref):
+    ref.take_input()
+    ref.find_area()
+    ref.disp_area()
+
+#creating objects
+
+c=circle()
+r=rectangle()
+t=Triangle()
+
+
+#passing objects
+geomtric_shape(c)    
+geomtric_shape(r)
+geomtric_shape(t)
+
+
+
+enter the raduis:
+6
+circle area =113.09733552923255
+
+enter the length of rectangle:
+1
+
+enter the breadth of rectangle:
+2
+Recatangle  area =2
+
+enter the breadth of triangle:
+5
+
+enter the height if triangle 8
+Triangle area =20.0
+
+
+'''
+
+
+
+
+'''
+#ABC : predefined class present  in abc module
+#ex-1:
+from abc import ABC,abstractmethod
+class A(ABC):
+    @abstractmethod
+    def disp(self):
+        pass
+    
+class B(A):
+    def disp(self):
+        print('good morning')
+    
+b=B()
+b.disp()    #good morning
+#a=A() 
+#TypeError: Can't instantiate abstract class A with abstract methods dis
+
+
+#ex-2:
+from abc import ABC ,abstractmethod
+class person(ABC):
+    @abstractmethod
+    def eat(self):
+        pass
+    
+class ratan(person):
+    def eat(self):
+        print('eating 5 idly')
+        
+class durga(person):
+    def eat(self):
+        print('eating 6 idly')
+
+r=ratan()
+r.eat() #eating 5 idly
+d=durga()
+d.eat() #eating 6 idly    
+
+
+#ex-3
+
+from abc import ABC ,abstractmethod
+
+class A(ABC):
+    @abstractmethod
+    def disp1(self):
+        pass
+    @abstractmethod
+    def disp2(self):
+        pass
+    
+class B(A):
+    def disp1(self):
+        print('walking')
+        
+class C(B):
+    def disp2(self):
+        print('dancing')        
+        
+c=C()
+c.disp1() #walking
+c.disp2()  #dancing
+
+#ex-4
+
+from abc import ABC,abstractmethod
+
+class A(ABC):
+    def __init__(self,val):
+        self.val=val
+        
+    @abstractmethod
+    def disp(self):
+        pass
+    
+    
+class add(A):
+    def disp(self):
+        print(10+self.val)
+class mul(A):
+    def disp(self):
+        print(20*self.val) 
+        
+        
+a=add(5)     
+a.disp() #15
+m=mul(5) 
+m.disp() #100
+ 
+        
+'''    
+
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan  6 19:20:49 2022
+
+@author: pc
+"""
+
+from abc import ABC ,abstractmethod    #importing the abstract class and abstract method
+
+class FundTransfer(ABC):               #declaring abstract class
+    def __init__(self,account_number,balance): #taking inputs from the user
+        self.__account_number=account_number  #initializing the local variables to instance variables and protecting the data
+        self.__balance=balance
+        
+    @property      
+    def account_number(self):        #implementing the getter method for account_number 
+        return self.__account_number
+    
+    @account_number.setter               #implementing the setter method to add or to modify the account number
+    def account_number(self,account_number):
+        if len(str(account_number))==10:     #checking the account number should be 10 digits
+            self.__account_number=account_number
+    @property           
+    def balance(self):          #implementing the getter method for balance
+        return self.__balance
+    
+    @balance.setter       
+    def balance(self,balance):     #implementing the setter method to add or  modify the balance
+        self.__balance=balance
+        
+        
+    def validate(self,amount):         #validation of the account number and amount
+        return len(str(self.account_number))==10\
+            and amount<self.balance and amount>0
+        
+    @abstractmethod
+    def transfer(self,amount):        #defining abstract class or incomplete method
+        pass
+    
+    
+    
+    
+class NEFTTransfer(FundTransfer):     #inheriting from the parent class 
+    def __init__(self, account_number, balance): 
+        super().__init__(account_number, balance) #super method is used for resuing the code in parent class
+        
+    def transfer(self, amount):       #overiding the method which is in parent class
+        sc=amount*0.05                #charges 
+        if (amount+sc)<self.balance:    #checking the condition that amount transfered should be less than the balance in the account
+            self.balance=self.balance-(amount+sc)
+            return True                 #returning true if the condition is true
+        return False
+    
+    
+    
+class IMPSTransfer(FundTransfer):
+    def __init__(self, account_number, balance):
+        super().__init__(account_number, balance)
+        
+    def transfer(self, amount):
+        sc=amount*0.02
+        if (amount+sc)<self.balance:
+            self.balance=self.balance-(amount+sc)
+            return True
+        return False
+        
+    
+    
+class RTGSTransfer(FundTransfer):
+    def __init__(self, account_number, balance):
+        super().__init__(account_number, balance)
+        
+    def transfer(self, amount):
+        if amount<self.balance and amount>10000:  #both cnditions must satisfy 
+            self.balance=self.balance-amount
+            return True
+        return False
+    
+    
+    
+    
+    
+    
+an =int(input('Enter your account number:'))   #enter the account number
+bal=int(input('Enter your account balance:'))   #enter the account balance
+
+print('Enter your choice')       
+print('1.NEFT\n 2.IMPS\n 3.RTGS\n')
+
+choice=int(input())         #choose your transaction
+
+if choice == 1:
+    ref=NEFTTransfer(an,bal)
+    
+elif choice==2:
+    ref=IMPSTransfer(an,bal)
+    
+elif choice==3:
+    ref=RTGSTransfer(an,bal)
+    
+else:
+    ('invalid choice')
+
+amt=int(input('Enter the amount to be transfered:'))     #how munch amount need to transfer
+    
+if ref.validate(amt):                         #validating the amount
+    if ref.transfer(amt):                     #if the validating is ok then proceed transaction
+        print('Transfer occured successfuly')
+        print(f'Reamaining balance is {ref.balance}')
+    else:
+        print('Tranfer could not be made')
+        
+else:
+    print('Account number or transfer amount seems to be wrong')        
+    
+    
+    
+        
+                
